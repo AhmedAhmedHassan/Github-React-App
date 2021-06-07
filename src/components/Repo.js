@@ -1,5 +1,13 @@
 import React,{useState} from 'react'
 import axios from 'axios'
+import Show from './Show'
+
+const people=[
+    {id:1,name:'Ahmed', date:new Date(), age:'26'},
+    {id:2,name:'Ali', date:new Date('11-4-2002'), age:'2'},
+    {id:3,name:'Hany', date:new Date('11-4-2006'), age:'30'},
+    
+  ];
 
 const Repo =()=>{
 
@@ -7,13 +15,9 @@ const Repo =()=>{
    
     const handleClick = async()=>{
         try{
+            
             const data= await axios('https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc')
-            const listRepos=data.data.items.map((item) => 
-            <li key={item.id}>
-                {item.name}
-                {item.stargazers_count}
-                <img  src={item.owner.avatar_url} />
-                </li>)
+            const listRepos=data.data.items
             // const listReposStar=data.data.items.map((item) => <li></li>)
             // const listReposImg=data.data.items.map((item) => <li> </li>)
             setRepos(listRepos)
@@ -23,13 +27,19 @@ const Repo =()=>{
         }catch(err){
            console.log(err)
         }
-
     }
+    
     return(
         <div>
-        <h1>hi</h1>
-         <li>{repos}</li>
-
+         {/* <li>{repos}</li> */}
+         <Show allrepos={repos}/> 
+       {/* {repos && repos.map((item)=>{
+            return(
+                <Show 
+                name={repos.name}/
+                > 
+            )
+        })}  */}
         <button onClick={handleClick}>Pull data</button>
         </div>
     )
