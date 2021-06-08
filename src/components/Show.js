@@ -3,19 +3,7 @@ import Card from './Card'
 
 const Show = (props) =>{
    
-    // let empty= <p>No Data Found</p>
-
-    // if(props.allrepos.length > 0){
-    //   empty =props.allrepos.map(item => (
-    //    <Card
-    //     key={item.id}
-    //     name={item.name}
-    //     stars={item.stargazers_count}
-    //     img={item.owner.avatar_url}
-    //    /> 
-    //   ))
-    //   }
-        
+   
     return(
     <div className="container mt-5 mb-3">
       <div className="row">

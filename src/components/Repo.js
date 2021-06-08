@@ -1,46 +1,59 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import axios from 'axios'
 import Show from './Show'
 
-const people=[
-    {id:1,name:'Ahmed', date:new Date(), age:'26'},
-    {id:2,name:'Ali', date:new Date('11-4-2002'), age:'2'},
-    {id:3,name:'Hany', date:new Date('11-4-2006'), age:'30'},
-    
-  ];
-
 const Repo =()=>{
 
-    const [repos,setRepos]=useState()
+    const [repos,setRepos]=useState([])
+    const [page, setPage]=useState(1)
+    const [loading, setLoading]=useState(true)
    
     const handleClick = async()=>{
         try{
             
-            const data= await axios('https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc')
+            const data= await axios(`https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc&page=${page}`)
             const listRepos=data.data.items
-            // const listReposStar=data.data.items.map((item) => <li></li>)
-            // const listReposImg=data.data.items.map((item) => <li> </li>)
             setRepos(listRepos)
             
-            // console.log(data.data.items[0].name)
             
         }catch(err){
            console.log(err)
         }
     }
+
+    // ///////////////////////////////////////
+
+    // const handleScroll=(event)=>{
+    //    const{scrollTop, clientHeight, scrollHeight}=event.currentTarget
+
+    //    if(scrollHeight - scrollTop === clientHeight){
+    //        setPage(prev => prev + 1)
+    //    }
+    //    console.log(scrollTop)
+    //    console.log(clientHeight)
+    // }
+
+    //  //////////////////////////////////////
+    // useEffect(()=>{
+    
+    //      const loadUsers = async () => {
+
+    //         setLoading(true)
+    //         const newUsers=await axios(`https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc&page=${page}`)
+    //         setRepos((prev) => [...prev, ...newUsers])
+    //         setLoading(false)
+    //      }
+
+    //      loadUsers()
+
+    // }, [page])
     
     return(
-        <div>
-         {/* <li>{repos}</li> */}
-         <Show allrepos={repos}/> 
-       {/* {repos && repos.map((item)=>{
-            return(
-                <Show 
-                name={repos.name}/
-                > 
-            )
-        })}  */}
-        <button onClick={handleClick}>Pull data</button>
+        <div >
+        
+          <Show allrepos={repos} /> 
+          {loading && <p>loading .....</p>}
+          <button onClick={handleClick}>Pull data</button>
         </div>
     )
 }
