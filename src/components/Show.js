@@ -1,13 +1,17 @@
 import Card from './Card'
 
 
-const Show = (props) =>{
+const Show = ({repos, loading}) =>{
+
+    if(loading){
+        return <h2>Loading...</h2>
+    }
    
    
     return(
     <div className="container mt-5 mb-3">
       <div className="row">
-        {props.allrepos && props.allrepos.map((item)=>{
+        {repos && repos.map((item)=>{
                 return(
                 
                     <Card
