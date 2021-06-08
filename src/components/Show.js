@@ -1,10 +1,11 @@
 import Card from './Card'
+import Loading from './Loading'
 
 
 const Show = ({repos, loading}) =>{
 
     if(loading){
-        return <h2>Loading...</h2>
+        return <Loading/>
     }
    
    

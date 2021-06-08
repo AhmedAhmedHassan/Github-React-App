@@ -1,36 +1,49 @@
 import React,{useState, useEffect} from 'react'
 import axios from 'axios'
 import Show from './Show'
-import Pagination from './Pagination'
-
+import {Button} from 'react-bootstrap'
 const Repo =()=>{
 
     const [repos,setRepos]=useState([])
     const [currentPage, setCurrentPage]=useState(1)
-    const [reposPerPage, setReposPerPage]=useState(9)
+    const [button, setButton]=useState(false)
     const [loading, setLoading]=useState(false)
    
+
+    const handleScroll=(event)=>{
+        const{scrollTop, clientHeight, scrollHeight}=event.currentTarget
+
+       if(scrollHeight - scrollTop === clientHeight){
+           setCurrentPage(prev => prev + 1)
+       }
+       
+     }
+
 
     useEffect(()=>{
         const fetchRepos = async()=>{
             setLoading(true)
-            const data= await axios.get(`https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc`)
+            const data= await axios.get(`https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc&page=${currentPage}`)
             const listRepos=data.data.items
             setRepos(listRepos)
             setLoading(false)
-
+            setButton(true)
         }
         fetchRepos()
-    }, [])
+    }, [currentPage])
 
 
 
     // Get Current repos
 
-    const indexOfLastRepo= currentPage * reposPerPage
-    const indexOfFirstRepo= indexOfLastRepo - reposPerPage
-    const currentRepos= repos.slice(indexOfFirstRepo, indexOfLastRepo)
+    // const indexOfLastRepo= currentPage * reposPerPage
+    // const indexOfFirstRepo= indexOfLastRepo - reposPerPage
+    // const currentRepos= repos.slice(indexOfFirstRepo, indexOfLastRepo)
 
+
+    // ///////////////////////////////////////
+
+   
 
 
 
@@ -75,12 +88,12 @@ const Repo =()=>{
     // }, [page])
     
     return(
-        <div >
+        <div>
         
-          <Show repos={currentRepos} loading={loading}/> 
-          {loading && <p>loading .....</p>}
-          {/* <button onClick={handleClick}>Pull data</button> */}
-          <Pagination reposPerPage={reposPerPage} totalRepos={repos.length}/>
+          <Show repos={repos} loading={loading} /> 
+           
+           <Button style={{display: !button || loading ? 'none' : 'block' }} onClick={handleScroll}>load more</Button> 
+          {/* <Pagination reposPerPage={reposPerPage} totalRepos={repos.length}/> */}
         </div>
     )
 }
