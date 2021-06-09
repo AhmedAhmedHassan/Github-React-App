@@ -1,13 +1,13 @@
-import Card from './Card'
-import Loading from './Loading'
+import Card from '../Card/Card'
+import Loading from '../Loading/Loading'
 
-
+//  display the loading component while fetching the data
 const Show = ({repos, loading}) =>{
 
     if(loading){
         return <Loading/>
     }
-   
+ 
    
     return(
     <div className="container mt-5 mb-3">
