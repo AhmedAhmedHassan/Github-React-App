@@ -64,7 +64,7 @@ const Repo =()=>{
             <strong>Sorry, There are no data to get</strong>
            </div>
            {/* Load more button */}
-           <Button className="mx-auto" style={{display: !button || loading ? 'none' : 'block' }} onClick={handleScroll}>load more</Button> 
+           <Button className="mx-auto mb-3" style={{display: !button || loading ? 'none' : 'block' }} onClick={handleScroll}>load more</Button> 
     
     </Container>
     )
