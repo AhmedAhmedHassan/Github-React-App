@@ -1,5 +1,4 @@
-import react from 'react'
-import Repo from './components/Repo'
+import Repo from './components/Repo/Repo'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 

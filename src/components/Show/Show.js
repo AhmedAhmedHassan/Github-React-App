@@ -1,25 +1,18 @@
-import Card from './Card'
+import Card from '../Card/Card'
+import Loading from '../Loading/Loading'
 
+//  display the loading component while fetching the data
+const Show = ({repos, loading}) =>{
 
-const Show = (props) =>{
+    if(loading){
+        return <Loading/>
+    }
+ 
    
-    // let empty= <p>No Data Found</p>
-
-    // if(props.allrepos.length > 0){
-    //   empty =props.allrepos.map(item => (
-    //    <Card
-    //     key={item.id}
-    //     name={item.name}
-    //     stars={item.stargazers_count}
-    //     img={item.owner.avatar_url}
-    //    /> 
-    //   ))
-    //   }
-        
     return(
     <div className="container mt-5 mb-3">
       <div className="row">
-        {props.allrepos && props.allrepos.map((item)=>{
+        {repos && repos.map((item)=>{
                 return(
                 
                     <Card
