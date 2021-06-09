@@ -2,23 +2,28 @@ import React,{useState, useEffect} from 'react'
 import axios from 'axios'
 import Show from './Show'
 import {Button} from 'react-bootstrap'
+import {Container} from 'react-bootstrap'
 const Repo =()=>{
 
     const [repos,setRepos]=useState([])
     const [currentPage, setCurrentPage]=useState(1)
     const [button, setButton]=useState(false)
     const [loading, setLoading]=useState(false)
-   
+    const [prevButton, setPrevButton]=useState(false)
 
-    const handleScroll=(event)=>{
-        const{scrollTop, clientHeight, scrollHeight}=event.currentTarget
 
-       if(scrollHeight - scrollTop === clientHeight){
-           setCurrentPage(prev => prev + 1)
-       }
-       
+    const handleScroll=()=>{
+      
+       setPrevButton(true)
+       setCurrentPage(prev => prev + 1)
      }
 
+
+    const handlePrevPage = () =>{
+        setCurrentPage(1)  
+        setPrevButton(false)
+       
+    }
 
     useEffect(()=>{
         const fetchRepos = async()=>{
@@ -88,13 +93,16 @@ const Repo =()=>{
     // }, [page])
     
     return(
-        <div>
-        
-          <Show repos={repos} loading={loading} /> 
+        <Container>
+         <Button className="btn btn-danger mt-4" style={{display:!prevButton || loading ? 'none':'block'}} onClick={handlePrevPage} >Back</Button>
+
+          <Show repos={repos} loading={loading}/> 
            
-           <Button style={{display: !button || loading ? 'none' : 'block' }} onClick={handleScroll}>load more</Button> 
+           <Button className="mx-auto" style={{display: !button || loading ? 'none' : 'block' }} onClick={handleScroll}>load more</Button> 
+         
+         
           {/* <Pagination reposPerPage={reposPerPage} totalRepos={repos.length}/> */}
-        </div>
+        </Container>
     )
 }
 export default Repo
